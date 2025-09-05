@@ -116,6 +116,7 @@ export const budgetReducer = (
       modal: false,
       expenses: [],
       editingId: "",
+      currentCategory: "",
     };
   }
 

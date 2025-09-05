@@ -1,53 +1,52 @@
-import { useMemo, useState } from "react"
+import { useMemo, useState } from "react";
 import { useBudget } from "../hooks/useBudget";
 
 export default function BudgetForm() {
+  const [budget, setBubget] = useState(0);
+  const { dispatch } = useBudget();
 
-const [budget,setBubget] = useState(0);
-const {state,dispatch} = useBudget();
-
-
-const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBubget(e.target.valueAsNumber);
-}
+  };
 
-const handleSubmit = (e : React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    dispatch({type:'add-budget',payload:{budget}})
-}
 
-const isValid = useMemo(() =>{
-    return isNaN(budget) || budget <=0
-},[budget])
+    dispatch({ type: "add-budget", payload: { budget } });
+  };
+
+  const isValid = useMemo(() => {
+    return isNaN(budget) || budget <= 0;
+  }, [budget]);
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit}>
-        <div className="flex flex-col space-y-5">
-            <label htmlFor="budget"
-            className="text-4xl text-center text-blue-600 font-bold"
-            >
-                Definir presupuesto
-            </label>
+      <div className="flex flex-col space-y-5">
+        <label
+          htmlFor="budget"
+          className="text-4xl text-center text-blue-600 font-bold"
+        >
+          Definir presupuesto
+        </label>
 
-            <input
-                id="budget" 
-                type="number" 
-                className="w-full bg-white border border-gray-200 p-2"
-                placeholder="Define tu presupuesto"
-                name="budget"
-                value={budget}
-                onChange={handleChange}
-                />
-        </div>
+        <input
+          id="budget"
+          type="number"
+          className="w-full bg-white border border-gray-200 p-2"
+          placeholder="Define tu presupuesto"
+          name="budget"
+          value={budget}
+          onChange={handleChange}
+        />
+      </div>
 
-        <input 
-            type="submit" 
-            value="Definir presupuesto"
-            className="bg-blue-600 hover:bg-blue-700 cursor-pointer
+      <input
+        type="submit"
+        value="Definir presupuesto"
+        className="bg-blue-600 hover:bg-blue-700 cursor-pointer
                         w-full p-2 text-white font-black uppercase disabled:opacity-40"
-            disabled={isValid}
-            />
+        disabled={isValid}
+      />
     </form>
-  )
+  );
 }
